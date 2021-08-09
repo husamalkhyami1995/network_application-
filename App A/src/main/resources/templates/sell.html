@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell Car</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/select2.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link"  th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/create}">create</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/sell}">Sell</a>
+            </li>
+
+            <li  sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/statistics}">statistics</a>
+            </li>
+
+            <li  sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/result}">result</a>
+            </li>
+            <li  sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/parameter}">Parameter</a>
+            </li>
+
+            <li  sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container" style="margin-top: 50px ; margin-bottom: 50px ;">
+    <form th:action="@{/sell}"  method="post" th:object="${selledCar}">
+        <div class="form-group">
+            <label for="sellDate">Car Name </label>
+            <select th:field="*{id}" class="car-name" name="state" style="width: 100% ; margin-bottom: 50px ;">
+                <option th:each="car: ${cars}" th:value="${car.getId()}" th:text="${car.getName()}">Alabama</option>
+            </select>
+        </div>
+        <div class="form-group" style="margin-top: 100px ;">
+            <label for="sellDate">Sell Date</label>
+            <input th:field="*{sellDate}" type="date" class="form-control" id="sellDate" aria-describedby="emailHelp">
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="sellPrice">Price</label>-->
+<!--            <input th:field="*{sellPrice}" type="number" class="form-control" id="sellPrice">-->
+<!--        </div>-->
+
+        <div class="form-group">
+            <label for="customer">Customer</label>
+            <input th:field="*{customer}"type="text" class="form-control" id="customer">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Sell Car</button>
+    </form>
+</div>
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.car-name').select2();
+    });
+</script>
+</body>
+</html>
